@@ -1,0 +1,24 @@
+$def with (page)
+
+<html>
+ <head>
+  <title>Launcher</title>
+  <style>
+    ul {
+      height: 300px; /*your fixed height*/
+      -webkit-column-count: 3;
+         -moz-column-count: 3;
+              column-count: 3; /*3 in those rules is just placeholder -- can be anything*/
+    }
+    li {
+      display: inline-block; /*necessary*/
+    }
+  </style>
+ </head>
+ <body>
+  <h2>Fireball Generator v0.1</h2>
+  <p>Don't forget to connect the battery.</p>
+  $:page
+  <p>For when things go badly: <a href="#">Dial 911</a></p>
+ </body>
+</html>
