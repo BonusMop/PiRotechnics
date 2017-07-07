@@ -28,11 +28,7 @@ class launch:
     raise web.seeother('/')
 
 def fire(num):
-  r=0
-  if num > 15:
-    r=1
-  if num > 31:
-    r=2
+  r = num/16
   d = demultiplexer[r]
   d.signal(num-r*16)
   d.uninhibit()
