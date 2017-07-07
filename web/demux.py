@@ -20,38 +20,63 @@ class Demux:
         original_mode = GPIO.getmode()
         try:
             GPIO.setmode(GPIO.BOARD)
-            GPIO.output(self._inhibit_pin, GPIO.HIGH)
             GPIO.setup(self._inhibit_pin, GPIO.OUT)
+            GPIO.output(self._inhibit_pin, GPIO.HIGH)
             for index in range(len(self._data_pins)):
-                GPIO.output(self._data_pins[index], GPIO.LOW)
                 GPIO.setup(self._data_pins[index], GPIO.OUT)
+                GPIO.output(self._data_pins[index], GPIO.LOW)
         finally:
-            GPIO.setmode(original_mode)
+            if original_mode != None:
+                GPIO.setmode(original_mode)
 
     def inhibit(self):
-        GPIO.output(self._inhibit_pin, GPIO.HIGH)
+        original_mode = GPIO.getmode()
+        try:
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.output(self._inhibit_pin, GPIO.HIGH)
+        finally:
+            if original_mode != None:
+                GPIO.setmode(original_mode)
     
     def uninhibit(self):
-        GPIO.output(self._inhibit_pin, GPIO.LOW)
+        original_mode = GPIO.getmode()
+        try:
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.output(self._inhibit_pin, GPIO.LOW)
+        finally:
+            if original_mode != None:
+                GPIO.setmode(original_mode)
 
     def signal(self, value):
-        if value & 1:
-            GPIO.output(self._data_pins[0], GPIO.HIGH)
-        else:
-            GPIO.output(self._data_pins[0], GPIO.LOW)
-        if value & 2:
-            GPIO.output(self._data_pins[1], GPIO.HIGH)
-        else:
-            GPIO.output(self._data_pins[1], GPIO.LOW)
-        if value & 4:
-            GPIO.output(self._data_pins[2], GPIO.HIGH)
-        else:
-            GPIO.output(self._data_pins[2], GPIO.LOW)
-        if value & 8:
-            GPIO.output(self._data_pins[3], GPIO.HIGH)
-        else:
-            GPIO.output(self._data_pins[3], GPIO.LOW)
+        original_mode = GPIO.getmode()
+        try:
+            GPIO.setmode(GPIO.BOARD)
+            if value & 1:
+                GPIO.output(self._data_pins[0], GPIO.HIGH)
+            else:
+                GPIO.output(self._data_pins[0], GPIO.LOW)
+            if value & 2:
+                GPIO.output(self._data_pins[1], GPIO.HIGH)
+            else:
+                GPIO.output(self._data_pins[1], GPIO.LOW)
+            if value & 4:
+                GPIO.output(self._data_pins[2], GPIO.HIGH)
+            else:
+                GPIO.output(self._data_pins[2], GPIO.LOW)
+            if value & 8:
+                GPIO.output(self._data_pins[3], GPIO.HIGH)
+            else:
+                GPIO.output(self._data_pins[3], GPIO.LOW)
+        finally:
+            if original_mode != None:
+                GPIO.setmode(original_mode)
 
     def reset(self):
-        for index in range(len(self._data_pins)):
-            GPIO.output(self._data_pins[index], GPIO.LOW)
+        original_mode = GPIO.getmode()
+        try:
+            GPIO.setmode(GPIO.BOARD)
+            for index in range(len(self._data_pins)):
+                GPIO.output(self._data_pins[index], GPIO.LOW)
+        finally:
+            if original_mode != None:
+                GPIO.setmode(original_mode)
